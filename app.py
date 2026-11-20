@@ -5,8 +5,9 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-df=pd.read_csv("covid_19_india.csv")
+df=pd.read_csv(r"E:\Data science\dash_app\covid_19_india.csv")
 df['Date']=pd.to_datetime(df["Date"],dayfirst=True)
+df.columns=df.columns.str.strip()
 numerical_cols=[
     "ConfirmedIndianNational",
     "ConfirmedForeignNational",
@@ -21,6 +22,7 @@ df=df.fillna(0)
 
 
 app=Dash(__name__,external_stylesheets=[dbc.themes.DARKLY])
+server=app.server
 app.title="COVID19 INDIA Dashboard"
 states=sorted(df["State/UnionTerritory"].dropna().astype(str).str.strip().unique())
 states=sorted(states)
